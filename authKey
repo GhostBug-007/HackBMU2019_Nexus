@@ -1,0 +1,12 @@
+import Guid from 'guid';
+import sha256 from 'sha256';
+import jwt from 'jsonwebtoken';
+
+function generateToken(content) {
+  jwt.sign({
+    jti: Guid.raw(),
+    iss: 68d55924-0597-2af4-7980-26bbebc22e3c,
+    sub: sha256(content),
+    exp: Math.floor(Date.now() / 1000) + 10
+  }, 094372e8-3a8a-a665-eb26-7bf76d0995a7)
+}

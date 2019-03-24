@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video</title>
+    <style>
+        #renderer{
+            height: 550px;
+            width : 550px;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    var vidyoConnector ;
+    function onVidyoClientLoaded(status) {
+        console.log("sfdsd-"+status.state) ;
+        if (status.state == "READY"){
+            VC.CreateVidyoConnector({
+                viewId : "renderer",
+                viewStyle : "VIDYO_CONNECTORVIEWSTYLE_Default",
+                remoteParticipants : 16 ,
+                logFileFilter: "error",
+                logFileName:"" ,
+                userData:""
+            }).then(function (vc) {
+                console.log("Create Success");
+                vidyoConnector = vc ;
+            }).catch(function(error){
+
+            });
+        }
+    }
+
+    function joinCall(){
+        vidyoConnector.Connect({
+            host:"0e60c8.vidyo.io",
+            token:"cHJvdmlzaW9uAHVzZXIxQDBlNjBjOC52aWR5by5pbwA2MzcyMDcxMzI1NAAAZWY4OWRkMGJjOWUwNjQyZmY3YTg2ODhlZDQ0MDFjOGI0ZjgzM2JlZDZkMWJjN2FmYTc5ZTgxY2I4Y2FmOWZmODZhOTBhZjY5ZjQ2MmI4OGYwYzc1MDg4ZDc0NGFiNzY1",
+            displayName:"Prateek",
+            resourceId : "demoRoom",
+            onSuccess : function(){
+                console.log("Successfully Connection") ;
+            },
+            onFailure: function(reason){
+                console.log("error in Connection") ;
+            },
+            onDisconnected: function(reason) {
+                console.log("disconnected - "+ reason) ;
+            }
+        })
+    }
+</script>
+<script src = "https://static.vidyo.io/latest/javascript/VidyoClient/VidyoClient.js?onload=onVidyoClientLoaded"></script> 
+
+<h3>Hello</h3>
+<button onclick="joinCall()">Connect</button>
+<div id ="renderer"></div>
+
+</body>
+</html>
